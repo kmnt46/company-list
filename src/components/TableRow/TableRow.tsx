@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState, useEffect } from 'react';
+import { ChangeEvent, FC, useState, useEffect, useMemo } from 'react';
 import { ICompany } from 'models';
 import { Button, Checkbox } from 'antd';
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
@@ -13,14 +13,13 @@ interface ITableRowProps {
 export const TableRow: FC<ITableRowProps> = ({ company }) => {
   const dispatch = useAppDispatch();
 
-  // Состояние для редактирования
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState(company.name);
   const [address, setAddress] = useState(company.address);
 
   const { id, selected } = company;
 
-  const handleSelectCompany = (id: number) => {
+  const handleSelectCompany = () => {
     dispatch(toggleSelectedCompany(id));
   };
 
@@ -45,14 +44,14 @@ export const TableRow: FC<ITableRowProps> = ({ company }) => {
     setAddress(company.address);
   }, [company.name, company.address]);
 
-  const rowSelected = selected ? styles.selected : '';
+  const rowSelected = useMemo(() => (selected ? styles.selected : ''), [selected]);
 
-  const rowEdit = editable ? styles.edit : '';
+  const rowEdit = useMemo(() => (editable ? styles.edit : ''), [editable]);
 
   return (
     <tr className={`${styles.row} ${rowSelected} ${rowEdit}`}>
       <td>
-        <Checkbox checked={selected} onClick={() => handleSelectCompany(id)} />
+        <Checkbox checked={selected} onClick={handleSelectCompany} />
         <Button onClick={handleEditSave}>{editable ? 'Save' : 'Edit'}</Button>
       </td>
       <td>

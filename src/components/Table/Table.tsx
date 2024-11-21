@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { TableRow } from '@/components/TableRow';
 import { Checkbox } from 'antd';
@@ -10,15 +10,14 @@ import { loadCompanies, toggleSelectAllCompany } from '@/slices';
 
 export const Table: FC = () => {
   const dispatch = useAppDispatch();
+
   const { companies, selected } = useAppSelector((state) => state.companies);
 
   useEffect(() => {
     dispatch(loadCompanies(10));
   }, [dispatch]);
 
-  const reversedCompanies = useMemo(() => (companies ? [...companies].reverse() : []), [companies]);
-
-  const emptyTable = !reversedCompanies.length;
+  const emptyTable = !companies.length;
 
   const handleSelectAllCompanies = (e: CheckboxChangeEvent) => {
     dispatch(toggleSelectAllCompany(e.target.checked));
@@ -40,7 +39,7 @@ export const Table: FC = () => {
       </thead>
       <tbody>
         {emptyTable && <EmptyTable />}
-        {reversedCompanies.map((company) => (
+        {companies.map((company) => (
           <TableRow key={company.id} company={company} />
         ))}
       </tbody>

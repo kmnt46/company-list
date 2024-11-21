@@ -7,17 +7,20 @@ import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { Input } from 'antd';
 
 export const ToolBar: FC = () => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-
-  const companies = useAppSelector((state) => state.companies.companies);
-  const emptyTable = !companies.length;
-
   const dispatch = useAppDispatch();
 
+  const companies = useAppSelector((state) => state.companies.companies);
+
+  const [name, setName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [address, setAddress] = useState('');
+
+  const emptyTable = !companies.length;
+
   const handleAddCompany = () => {
-    if (name && address) {
-      dispatch(addCompany({ name, address }));
+    if (name.trim() && address.trim()) {
+      dispatch(addCompany({ name: name.trim(), address: address.trim() }));
       setName('');
       setAddress('');
     }
@@ -27,16 +30,12 @@ export const ToolBar: FC = () => {
     e.preventDefault();
     dispatch(removeSelectedCompany());
   };
-
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-
   const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
   };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -67,7 +66,7 @@ export const ToolBar: FC = () => {
         okText="Добавить"
         cancelText="Отмена"
         okButtonProps={{
-          disabled: !name || !address,
+          disabled: !name.trim() || !address.trim(),
         }}
       >
         <div className={styles.inputGroup}>
