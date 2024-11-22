@@ -9,3 +9,8 @@
 .edit {
   background-color: $table-row-edit-color;
 }
+
+.rowTools {
+  display: flex;
+  justify-content: space-between;
+}

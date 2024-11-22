@@ -1,16 +1,19 @@
-import { ChangeEvent, FC, useState, useEffect, useMemo } from 'react';
-import { ICompany } from 'models';
+import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button, Checkbox } from 'antd';
+import { ICompany } from 'models';
+import { ChangeEvent, FC, useState, useEffect, useMemo, memo } from 'react';
+
+import styles from './TableRow.module.scss';
+
+import { TableInput } from '@/components/TableInput';
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { editCompany, toggleSelectedCompany } from '@/slices';
-import styles from './TableRow.module.scss';
-import { TableInput } from '@/components/TableInput';
 
 interface ITableRowProps {
   company: ICompany;
 }
 
-export const TableRow: FC<ITableRowProps> = ({ company }) => {
+export const TableRow: FC<ITableRowProps> = memo(({ company }) => {
   const dispatch = useAppDispatch();
 
   const [editable, setEditable] = useState(false);
@@ -19,16 +22,13 @@ export const TableRow: FC<ITableRowProps> = ({ company }) => {
 
   const { id, selected } = company;
 
+  useEffect(() => {
+    setName(company.name);
+    setAddress(company.address);
+  }, [company.name, company.address]);
+
   const handleSelectCompany = () => {
     dispatch(toggleSelectedCompany(id));
-  };
-
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
   };
 
   const handleEditSave = () => {
@@ -39,20 +39,29 @@ export const TableRow: FC<ITableRowProps> = ({ company }) => {
     setEditable(!editable);
   };
 
-  useEffect(() => {
-    setName(company.name);
-    setAddress(company.address);
-  }, [company.name, company.address]);
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
+  };
 
   const rowSelected = useMemo(() => (selected ? styles.selected : ''), [selected]);
 
   const rowEdit = useMemo(() => (editable ? styles.edit : ''), [editable]);
 
+  const buttonOption = useMemo(() => (editable ? <SaveOutlined /> : <EditOutlined />), [editable]);
+
   return (
     <tr className={`${styles.row} ${rowSelected} ${rowEdit}`}>
       <td>
-        <Checkbox checked={selected} onClick={handleSelectCompany} />
-        <Button onClick={handleEditSave}>{editable ? 'Save' : 'Edit'}</Button>
+        <div className={styles.rowTools}>
+          <Checkbox className={styles.checkBox} checked={selected} onClick={handleSelectCompany} />
+          <Button className={styles.button} onClick={handleEditSave}>
+            {buttonOption}
+          </Button>
+        </div>
       </td>
       <td>
         <TableInput
@@ -74,4 +83,4 @@ export const TableRow: FC<ITableRowProps> = ({ company }) => {
       </td>
     </tr>
   );
-};
+});

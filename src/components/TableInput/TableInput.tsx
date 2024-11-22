@@ -1,4 +1,5 @@
 import { ChangeEvent, FC } from 'react';
+
 import styles from './TableInput.module.scss';
 
 interface IInputProps {
@@ -9,6 +10,4 @@ interface IInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const TableInput: FC<IInputProps> = (tableInputProps) => {
-  return <input className={styles.input} {...tableInputProps} />;
-};
+export const TableInput: FC<IInputProps> = (tableInputProps) => <input className={styles.input} {...tableInputProps} />;

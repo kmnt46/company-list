@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { IEditCompanyPayload, IInitialState } from '@/models';
 import { generateFakeCompanies } from '@/utils/generateFakeCompanies.ts';
 

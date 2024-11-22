@@ -1,19 +1,20 @@
-import { MouseEvent, ChangeEvent, FC, useState } from 'react';
-import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
-import { addCompany, removeSelectedCompany } from '@/slices';
 import { Button, Modal } from 'antd';
-import styles from './ToolBar.module.scss';
-import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { Input } from 'antd';
+import { MouseEvent, ChangeEvent, FC, useState } from 'react';
+
+import styles from './ToolBar.module.scss';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { addCompany, removeSelectedCompany } from '@/slices';
 
 export const ToolBar: FC = () => {
   const dispatch = useAppDispatch();
 
   const companies = useAppSelector((state) => state.companies.companies);
 
-  const [name, setName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [name, setName] = useState('');
   const [address, setAddress] = useState('');
 
   const emptyTable = !companies.length;
@@ -30,12 +31,6 @@ export const ToolBar: FC = () => {
     e.preventDefault();
     dispatch(removeSelectedCompany());
   };
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -48,6 +43,14 @@ export const ToolBar: FC = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
   };
 
   return (

@@ -9,12 +9,17 @@
     text-align: left;
   }
 
-  th {
-    color: $text-color;
+  th:first-child {
+    width: 10%;
   }
 }
 
 .checkboxContainer {
   display: flex;
   flex-direction: column;
+}
+
+.scrollContainer {
+  max-height: 700px;
+  overflow: auto
 }

@@ -1,1 +1,1 @@
-export { TableRow } from './TableRow.tsx';
+export { TableRow } from './TableRow';

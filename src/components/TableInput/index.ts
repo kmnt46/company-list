@@ -1,1 +1,1 @@
-export { TableInput } from './TableInput.tsx';
+export { TableInput } from './TableInput';
