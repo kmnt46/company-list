@@ -13,7 +13,7 @@ const companiesSlice = createSlice({
   initialState,
   reducers: {
     addCompany(state, { payload }) {
-      const newId = state.companies.length + 1;
+      const newId = state.companies.length ? Math.max(...state.companies.map((c) => c.id)) + 1 : 1;
       state.companies.unshift({ id: newId, ...payload, selected: false });
     },
     removeSelectedCompany(state) {
@@ -39,6 +39,11 @@ const companiesSlice = createSlice({
     loadCompanies: (state, { payload }) => {
       state.companies = generateFakeCompanies(payload);
     },
+    appendCompanies(state, { payload }) {
+      const newStartId = state.companies.length ? Math.max(...state.companies.map((company) => company.id)) + 1 : 1;
+      const newCompanies = generateFakeCompanies(payload, newStartId);
+      state.companies = [...state.companies, ...newCompanies];
+    },
   },
 });
 
@@ -49,5 +54,6 @@ export const {
   toggleSelectAllCompany,
   editCompany,
   loadCompanies,
+  appendCompanies,
 } = companiesSlice.actions;
 export default companiesSlice.reducer;

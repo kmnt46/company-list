@@ -1,7 +1,7 @@
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button, Checkbox } from 'antd';
 import { ICompany } from 'models';
-import { ChangeEvent, FC, useState, useEffect, useMemo, memo } from 'react';
+import { ChangeEvent, FC, useState, useEffect, useMemo } from 'react';
 
 import styles from './TableRow.module.scss';
 
@@ -13,7 +13,7 @@ interface ITableRowProps {
   company: ICompany;
 }
 
-export const TableRow: FC<ITableRowProps> = memo(({ company }) => {
+export const TableRow: FC<ITableRowProps> = ({ company }) => {
   const dispatch = useAppDispatch();
 
   const [editable, setEditable] = useState(false);
@@ -57,7 +57,7 @@ export const TableRow: FC<ITableRowProps> = memo(({ company }) => {
     <tr className={`${styles.row} ${rowSelected} ${rowEdit}`}>
       <td>
         <div className={styles.rowTools}>
-          <Checkbox className={styles.checkBox} checked={selected} onClick={handleSelectCompany} />
+          <Checkbox className={styles.checkBox} checked={selected} onChange={handleSelectCompany} />
           <Button className={styles.button} onClick={handleEditSave}>
             {buttonOption}
           </Button>
@@ -83,4 +83,4 @@ export const TableRow: FC<ITableRowProps> = memo(({ company }) => {
       </td>
     </tr>
   );
-});
+};
