@@ -1,0 +1,11 @@
+.toolBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputGroup {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,0 +1,25 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid $table-border-color;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th:first-child {
+    width: 10%;
+  }
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollContainer {
+  height: 80vh;
+  overflow: auto;
+}
