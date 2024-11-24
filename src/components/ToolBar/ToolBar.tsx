@@ -1,12 +1,13 @@
-import { Button, Modal } from 'antd';
-import { Input } from 'antd';
 import { MouseEvent, ChangeEvent, FC, useState } from 'react';
 
-import styles from './ToolBar.module.scss';
+import { Input } from 'antd';
+import { Button, Modal } from 'antd';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { addCompany, removeSelectedCompany } from '@/slices';
+
+import styles from './ToolBar.module.scss';
 
 export const ToolBar: FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,11 @@ export const ToolBar: FC = () => {
       setAddress('');
     }
   };
+
+  const hasSelectedCompanies = useAppSelector((state) =>
+    state.companies.companies.some((company) => company.selected)
+  );
+
 
   const handleRemoveSelectedCompany = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -58,7 +64,7 @@ export const ToolBar: FC = () => {
       <Button type="primary" onClick={showModal}>
         Добавить новую компанию
       </Button>
-      <Button disabled={emptyTable} danger type="primary" onClick={handleRemoveSelectedCompany}>
+      <Button disabled={emptyTable || !hasSelectedCompanies} danger type="primary" onClick={handleRemoveSelectedCompany}>
         Удалить выделенные компании
       </Button>
       <Modal

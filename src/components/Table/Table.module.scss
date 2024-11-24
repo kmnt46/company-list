@@ -14,12 +14,6 @@
   }
 }
 
-.checkboxContainer {
-  display: flex;
-  flex-direction: column;
-}
-
 .scrollContainer {
-  height: 80vh;
-  overflow: auto;
+  overflow-y: auto;
 }
