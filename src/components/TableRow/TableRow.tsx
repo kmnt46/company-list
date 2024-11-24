@@ -1,13 +1,14 @@
+import { ChangeEvent, FC, useState, useEffect, useMemo } from 'react';
+
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button, Checkbox } from 'antd';
 import { ICompany } from 'models';
-import { ChangeEvent, FC, useState, useEffect, useMemo } from 'react';
-
-import styles from './TableRow.module.scss';
 
 import { TableInput } from '@/components/TableInput';
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { editCompany, toggleSelectedCompany } from '@/slices';
+
+import styles from './TableRow.module.scss';
 
 interface ITableRowProps {
   company: ICompany;
