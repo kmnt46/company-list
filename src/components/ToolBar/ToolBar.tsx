@@ -1,4 +1,4 @@
-import { MouseEvent, ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
 import { Input } from 'antd';
 import { Button, Modal } from 'antd';
@@ -28,15 +28,11 @@ export const ToolBar: FC = () => {
     }
   };
 
-  const hasSelectedCompanies = useAppSelector((state) =>
-    state.companies.companies.some((company) => company.selected)
-  );
-
-
-  const handleRemoveSelectedCompany = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleRemoveSelectedCompany = () => {
     dispatch(removeSelectedCompany());
   };
+
+  const hasSelectedCompanies = useAppSelector((state) => state.companies.companies.some((company) => company.selected));
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -64,7 +60,12 @@ export const ToolBar: FC = () => {
       <Button type="primary" onClick={showModal}>
         Добавить новую компанию
       </Button>
-      <Button disabled={emptyTable || !hasSelectedCompanies} danger type="primary" onClick={handleRemoveSelectedCompany}>
+      <Button
+        disabled={emptyTable || !hasSelectedCompanies}
+        danger
+        type="primary"
+        onClick={handleRemoveSelectedCompany}
+      >
         Удалить выделенные компании
       </Button>
       <Modal

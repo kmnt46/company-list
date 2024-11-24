@@ -12,7 +12,7 @@ const companiesSlice = createSlice({
   name: 'companies',
   initialState,
   reducers: {
-    addCompany(state, { payload }) {
+    addCompany(state, { payload }: { payload: { name: string; address: string } }) {
       const newId = state.companies.length ? Math.max(...state.companies.map((c) => c.id)) + 1 : 1;
       state.companies.unshift({ id: newId, ...payload, selected: false });
     },
@@ -20,13 +20,13 @@ const companiesSlice = createSlice({
       state.companies = state.companies.filter((company) => !company.selected);
       state.selected = false;
     },
-    toggleSelectedCompany(state, { payload }) {
+    toggleSelectedCompany(state, { payload }: { payload: number }) {
       const company = state.companies.find((company) => company.id === payload);
       if (company) {
         company.selected = !company.selected;
       }
     },
-    toggleSelectAllCompany(state, { payload }) {
+    toggleSelectAllCompany(state, { payload }: { payload: boolean }) {
       state.companies.forEach((company) => (company.selected = payload));
       state.selected = !state.selected;
     },
@@ -36,13 +36,8 @@ const companiesSlice = createSlice({
         company[payload.field] = payload.value;
       }
     },
-    loadCompanies: (state, { payload }) => {
+    loadCompanies: (state, { payload }: { payload: number }) => {
       state.companies = generateFakeCompanies(payload);
-    },
-    appendCompanies(state, { payload }) {
-      const newStartId = state.companies.length ? Math.max(...state.companies.map((company) => company.id)) + 1 : 1;
-      const newCompanies = generateFakeCompanies(payload, newStartId);
-      state.companies = [...state.companies, ...newCompanies];
     },
   },
 });
@@ -54,6 +49,5 @@ export const {
   toggleSelectAllCompany,
   editCompany,
   loadCompanies,
-  appendCompanies,
 } = companiesSlice.actions;
 export default companiesSlice.reducer;

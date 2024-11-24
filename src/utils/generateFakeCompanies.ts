@@ -1,10 +1,10 @@
 import { ICompany } from '@/models';
 
-export function generateFakeCompanies(count: number, startId: number = 0): ICompany[] {
+export function generateFakeCompanies(count: number): ICompany[] {
   return Array.from({ length: count }, (_, index) => ({
-    id: startId + index + 1,
-    name: `Компания ${startId + index + 1}`,
-    address: `Адрес ${startId + index + 1}`,
+    id: index + 1,
+    name: `Компания ${index + 1}`,
+    address: `Адрес ${index + 1}`,
     selected: false,
   }));
 }
