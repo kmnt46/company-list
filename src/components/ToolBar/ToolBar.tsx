@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useMemo, useState } from 'react';
 
 import { Input } from 'antd';
 import { Button, Modal } from 'antd';
@@ -20,6 +20,8 @@ export const ToolBar: FC = () => {
 
   const emptyTable = !companies.length;
 
+  const hasSelectedCompanies = useMemo(() => companies.some((company) => company.selected), [companies]);
+
   const handleAddCompany = () => {
     if (name.trim() && address.trim()) {
       dispatch(addCompany({ name: name.trim(), address: address.trim() }));
@@ -31,8 +33,6 @@ export const ToolBar: FC = () => {
   const handleRemoveSelectedCompany = () => {
     dispatch(removeSelectedCompany());
   };
-
-  const hasSelectedCompanies = useAppSelector((state) => state.companies.companies.some((company) => company.selected));
 
   const showModal = () => {
     setIsModalOpen(true);

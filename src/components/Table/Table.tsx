@@ -12,7 +12,7 @@ import styles from './Table.module.scss';
 export const Table: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { companies, selected } = useAppSelector((state) => state.companies);
+  const companies = useAppSelector((state) => state.companies.companies);
 
   const [scrollTop, setScrollTop] = useState(0);
   const containerHeight = 700;
@@ -23,6 +23,11 @@ export const Table: FC = () => {
   const visibleRows = Math.ceil(containerHeight / rowHeight);
 
   const emptyTable = !companies.length;
+
+  const allSelected = useMemo(
+    () => companies.length > 0 && companies.every((company) => company.selected),
+    [companies],
+  );
 
   useEffect(() => {
     dispatch(loadCompanies(10000));
@@ -44,10 +49,10 @@ export const Table: FC = () => {
   return (
     <div onScroll={handleScroll} className={styles.scrollContainer} style={{ height: containerHeight }}>
       <table className={styles.table}>
-        <TableHeader selected={selected} emptyTable={emptyTable} />
+        <TableHeader selected={allSelected} emptyTable={emptyTable} />
         <tbody>
           {emptyTable ? (
-            <EmptyTable />
+            <EmptyTable title={'Список компаний пуст'} />
           ) : (
             <>
               <tr style={{ height: topPadding }}></tr>

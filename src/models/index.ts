@@ -1,6 +1,5 @@
 export interface IInitialState {
   companies: ICompany[];
-  selected: boolean;
 }
 
 export interface ICompany {
