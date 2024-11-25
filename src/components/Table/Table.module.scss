@@ -1,0 +1,19 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid $table-border-color;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th:first-child {
+    width: 10%;
+  }
+}
+
+.scrollContainer {
+  overflow-y: auto;
+}
